@@ -1,0 +1,95 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Runtime.Serialization
+
+namespace PartsSystem
+
+    {DataContract}
+    {Serializable}
+    public cls class ProductGroup
+
+        {IgnoreDataMember}
+        private wrapper, @ProductGroupWrapper
+
+        ;;; <summary>
+        ;;; Construct an empty ProductGroup object
+        ;;; </summary>
+        public method ProductGroup
+        proc
+            wrapper = new ProductGroupWrapper()
+        endmethod
+
+        ;;; <summary>
+        ;;; Construct a ProductGroup object containing the data from a PRODUCT_GROUP record
+        ;;; </summary>
+        ;;; <param name="aProductGroup">Passed ProductGroup record</param>
+        internal method ProductGroup
+            required in aProductGroup, String
+            this()
+        proc
+            ;;Save the record
+            wrapper.Record = aProductGroup
+        endmethod
+
+        ;;; <summary>
+        ;;; When WCF de-serializes data back into an object it uses "vudu" to construct an
+        ;;; object in such a magical way that the constructors are not called!!! This causes
+        ;;; problems because we need to instantiate our "wrapper" object. This method solves
+        ;;; that problem by doing the "new" when deserialization takes place.
+        ;;; </summary>
+        {OnDeserializing}
+        private method SetValuesOnDeserializing, void
+            context, StreamingContext
+        proc
+            wrapper = new ProductGroupWrapper()
+        endmethod
+
+        ;;; <summary>
+        ;;; Provide a mechanism for INTERNAL code to be able to get the data as a record.
+        ;;; </summary>
+        internal property Record, String
+            method get
+            proc
+                mreturn wrapper.Record
+            endmethod
+        endproperty
+
+        ;;Expose the fields in the Synergy record as properties, using .NET types
+
+        ;;; <summary>
+        ;;; group id
+        ;;; </summary>
+        {DataMember}
+        public property GroupId, String
+            method get
+            proc
+                mreturn wrapper.GroupId
+            endmethod
+            method set
+            proc
+                wrapper.GroupId = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; description
+        ;;; </summary>
+        {DataMember}
+        public property Description, String
+            method get
+            proc
+                mreturn wrapper.Description
+            endmethod
+            method set
+            proc
+                wrapper.Description = value
+            endmethod
+        endproperty
+
+
+    endclass
+
+endnamespace

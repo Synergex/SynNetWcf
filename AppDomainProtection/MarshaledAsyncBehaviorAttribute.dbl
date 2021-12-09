@@ -1,0 +1,139 @@
+
+
+
+
+
+
+
+
+
+
+
+
+; THIS CODE IS NOT CURRENTLY USED. THE C# VERSION OF THE CODE IN THE
+; APPDOMAINPROTECTIONCORE ASSEMBLY IS CURRENTLY BEING USED.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;*****************************************************************************
+;;
+;; Title:       MarshaledAsyncBehaviorAttribute.dbl
+;;
+;; Type:        Class
+;;
+;; Description: 
+;;
+;; Date:        17th June 2015
+;;
+;; Authors:     Jeff Greene      Synergex Development
+;;                               http://www.synergex.com
+;;
+;;*****************************************************************************
+;;
+;; Copyright (c) 2015, Synergex International, Inc.
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+
+;import System
+;import System.ServiceModel.Description
+;import System.ServiceModel.Dispatcher
+;
+;.array 0
+;
+;namespace AppDomainProtection
+;	
+;	public class MarshaledAsyncBehaviorAttribute extends Attribute implements IContractBehaviorAttribute, IContractBehavior
+;		
+;.region "IContractBehaviorAttribute Members"
+;		
+;		public property TargetContract, @Type
+;			method get
+;			proc
+;				mreturn ^typeof(IsolatableServiceBaseBase)
+;			endmethod
+;		endproperty
+;		
+;.endregion
+;		
+;.region "IContractBehavior Members"
+;		
+;		public method AddBindingParameters, void
+;			description, @ContractDescription 
+;			endpoint, @ServiceEndpoint 
+;			parameters, @System.ServiceModel.Channels.BindingParameterCollection 
+;			endparams
+;		proc
+;			mreturn
+;		endmethod
+;		
+;		public method ApplyClientBehavior, void
+;			description, @ContractDescription 
+;			endpoint, @ServiceEndpoint 
+;			runtime, @ClientRuntime 
+;			endparams
+;		proc
+;			mreturn
+;		endmethod
+;		
+;		public method ApplyDispatchBehavior, void
+;			description, @ContractDescription 
+;			endpoint, @ServiceEndpoint 
+;			dispatch, @DispatchRuntime 
+;			endparams
+;		proc
+;			data operation, @OperationDescription
+;			foreach operation in endpoint.Contract.Operations
+;			begin
+;				if (!operation.Behaviors.Contains(^typeof(MarshaledOperationInvokerBehavior)))
+;					operation.Behaviors.Add(new MarshaledOperationInvokerBehavior())
+;			end
+;		endmethod
+;		
+;		public method Validate, void
+;			description, @ContractDescription 
+;			endpoint, @ServiceEndpoint 
+;			endparams
+;		proc
+;			mreturn
+;		endmethod
+;		
+;.endregion
+;		
+;	endclass
+;	
+;endnamespace

@@ -1,0 +1,167 @@
+;;*****************************************************************************
+;;
+;; Title:       SingletonBehaviorAttribute.dbl
+;;
+;; Type:        Class
+;;
+;; Description: This class implements an attribute that can be applied to a
+;;              WCF service class (or interface) in order to implement a
+;;              custom WCF service instance provider that provides AppDomain
+;;              and multi-threading protection for any Synergy .NET code
+;;              that executes within the service. The custom service instance
+;;              provider is implemented in the ServiceInstanceProvider class.
+;;
+;; Date:        9th January 2014
+;;
+;; Authors:     Steve Ives       Synergex Professional Services Group
+;;              Jeff Greene      Synergex Development
+;;                               http://www.synergex.com
+;;
+;;*****************************************************************************
+;;
+;; Copyright (c) 2014, Synergex International, Inc.
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+
+import System.ServiceModel.Channels
+import System.ServiceModel.Description
+import System.ServiceModel.Dispatcher
+
+namespace AppDomainProtection
+	
+	public class SingletonBehaviorAttribute extends Attribute implements IContractBehaviorAttribute, IContractBehavior
+		
+		private mTargetType, @Type
+		
+		;;; <summary>
+		;;; Constructs a new SingletonBehaviorAttribute object.
+		;;; </summary>
+		;;; <param name="targetType">The type of the class or interface that defines the WCF service contract.</param>
+		public method SingletonBehaviorAttribute
+			targetType, @Type
+			endparams
+		proc
+			mTargetType = targetType
+		endmethod
+		
+.region "IContractBehaviorAttribute members"
+		
+		;;; <summary>
+		;;; Gets the type of the contract to which the contract behavior is applicable.
+		;;; </summary>
+		public property TargetContract, @Type
+			method get
+			proc
+				mreturn mTargetType
+			endmethod
+		endproperty
+		
+.endregion
+		
+.region "IContractBehavior members"
+		
+		;;; <summary>
+		;;; Configures any binding elements to support the contract behavior.
+		;;; Implement the AddBindingParameters method to provide binding elements with the extra objects they require to support the contract behavior.
+		;;; This method is called once for each endpoint that uses the specified service contract.
+		;;; </summary>
+		;;; <param name="description">The contract description to modify.</param>
+		;;; <param name="endpoint">The endpoint to modify.</param>
+		;;; <param name="parameters">The objects that binding elements require to support the behavior.</param>
+		public method AddBindingParameters, void
+			description, @ContractDescription
+			endpoint, @ServiceEndpoint
+			parameters, @BindingParameterCollection
+			endparams
+		proc
+			
+		endmethod
+		
+		;;; <summary>
+		;;; Implements a modification or extension of the client across a contract.
+		;;; </summary>
+		;;; <param name="description">The contract description for which the extension is intended.</param>
+		;;; <param name="endpoint">The endpoint.</param>
+		;;; <param name="runtime">The client runtime.</param>
+		public method ApplyClientBehavior, void
+			description, @ContractDescription
+			endpoint, @ServiceEndpoint
+			runtime, @ClientRuntime
+			endparams
+		proc
+			
+		endmethod
+		
+		;;; <summary>
+		;;; Implements a modification or extension of the client across a contract. Implement the
+		;;; ApplyDispatchBehavior to view, modify, or add custom extensions to the service runtime
+		;;; across all messages in a specific contract or for one specific operation in that contract. 
+		;;; The ApplyDispatchBehavior method can throw a NotImplementedException exception if the
+		;;; behavior is only intended for use in a client application. This method is called once
+		;;; for each endpoint that uses the specified service contract. Note that there can be two
+		;;; operations with the same name in the description (one in each direction), so if you must
+		;;; iterate through operations where the contract is a duplex contract, you must correlate
+		;;; the message direction between the endpoint DispatchRuntime and that returned by the
+		;;; CallbackClientRuntime property. In addition, because other behaviors may have already
+		;;; added or removed some operations from the runtime, there is no guarantee that there are
+		;;; the same number of operations in description as there are DispatchOperation objects in
+		;;; the Operations property.
+		;;; </summary>
+		;;; <param name="description">The contract description to be modified.</param>
+		;;; <param name="endpoint">The endpoint that exposes the contract.</param>
+		;;; <param name="dispatch">The dispatch runtime that controls service execution.</param>
+		public method ApplyDispatchBehavior, void
+			description, @ContractDescription
+			endpoint, @ServiceEndpoint
+			dispatch, @DispatchRuntime
+			endparams
+		proc
+			;;We'll provide a custom service instance provider.
+			dispatch.InstanceProvider = new ServiceInstanceProvider(mTargetType)
+		endmethod
+		
+		;;; <summary>
+		;;; Confirms that the contract and endpoint can support the contract behavior. Implement the
+		;;; Validate method to confirm that the contract description is sufficient to support the
+		;;; custom contract behavior. Implementations can inspect the description and either throw
+		;;; or return no value. This method is called once for each endpoint that uses the specified
+		;;; service contract.
+		;;; </summary>
+		;;; <param name="description">The contract to validate.</param>
+		;;; <param name="endpoint">The endpoint to validate.</param>
+		public method Validate, void
+			description, @ContractDescription
+			endpoint, @ServiceEndpoint
+			endparams
+		proc
+			
+		endmethod
+		
+.endregion
+		
+	endclass
+	
+endnamespace

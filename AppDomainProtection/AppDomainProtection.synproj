@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>"AppDomainProtection"</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{730cac09-e5cf-441c-80d0-f0623ed1adbb}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>AppDomainProtection</RootNamespace>
+    <AssemblyName>AppDomainProtection</AssemblyName>
+    <MainFile>Class.dbl</MainFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetPlatform>v45</TargetPlatform>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <DBL_qWarnLevel>3 - Don't display warnings levels higher than 3</DBL_qWarnLevel>
+    <DBL_qWarn>True</DBL_qWarn>
+    <DBLCmdOptions> -W3 -qstack</DBLCmdOptions>
+    <Language>Synergy</Language>
+    <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <ProjEnvVars>RPSMFIL=$(SolutionDir)rps\rpsmain.ism;RPSTFIL=$(SolutionDir)rps\rpstext.ism;</ProjEnvVars>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>AppDomainProtectionKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Debug</DebugOptimize>
+    <DocumentationFile>bin\Debug\AppDomainProtection.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <SerializeAssembly>Auto</SerializeAssembly>
+    <RunVerifyPostCompile>true</RunVerifyPostCompile>
+    <LanguageCompatibilityLevel>100301</LanguageCompatibilityLevel>
+    <TargetRuntimeLevel>100301</TargetRuntimeLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Optimize</DebugOptimize>
+    <DocumentationFile>bin\Release\AppDomainProtection.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="synrnt">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppDomainPoolManager.dbl" />
+    <Compile Include="BackgroundDispatcher.dbl" />
+    <Compile Include="IAppDomainPoolable.dbl" />
+    <Compile Include="IsolatableServiceBase.dbl" />
+    <Compile Include="Properties\AssemblyInfo.dbl" />
+    <Compile Include="ServiceInstanceProvider.dbl" />
+    <Compile Include="SingletonBehaviorAttribute.dbl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppDomainProtectionKey.snk">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppDomainProtectionCore\AppDomainProtectionCore.csproj">
+      <Name>AppDomainProtectionCore</Name>
+      <Project>{7169e122-bcee-43cb-81e9-db45c7937475}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
+</Project>

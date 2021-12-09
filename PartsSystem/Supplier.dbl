@@ -1,0 +1,185 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Runtime.Serialization
+
+namespace PartsSystem
+
+    {DataContract}
+    {Serializable}
+    public cls class Supplier
+
+        {IgnoreDataMember}
+        private wrapper, @SupplierWrapper
+
+        ;;; <summary>
+        ;;; Construct an empty Supplier object
+        ;;; </summary>
+        public method Supplier
+        proc
+            wrapper = new SupplierWrapper()
+        endmethod
+
+        ;;; <summary>
+        ;;; Construct a Supplier object containing the data from a SUPPLIER record
+        ;;; </summary>
+        ;;; <param name="aSupplier">Passed Supplier record</param>
+        internal method Supplier
+            required in aSupplier, String
+            this()
+        proc
+            ;;Save the record
+            wrapper.Record = aSupplier
+        endmethod
+
+        ;;; <summary>
+        ;;; When WCF de-serializes data back into an object it uses "vudu" to construct an
+        ;;; object in such a magical way that the constructors are not called!!! This causes
+        ;;; problems because we need to instantiate our "wrapper" object. This method solves
+        ;;; that problem by doing the "new" when deserialization takes place.
+        ;;; </summary>
+        {OnDeserializing}
+        private method SetValuesOnDeserializing, void
+            context, StreamingContext
+        proc
+            wrapper = new SupplierWrapper()
+        endmethod
+
+        ;;; <summary>
+        ;;; Provide a mechanism for INTERNAL code to be able to get the data as a record.
+        ;;; </summary>
+        internal property Record, String
+            method get
+            proc
+                mreturn wrapper.Record
+            endmethod
+        endproperty
+
+        ;;Expose the fields in the Synergy record as properties, using .NET types
+
+        ;;; <summary>
+        ;;; supplier id
+        ;;; </summary>
+        {DataMember}
+        public property SupplierId, String
+            method get
+            proc
+                mreturn wrapper.SupplierId
+            endmethod
+            method set
+            proc
+                wrapper.SupplierId = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; supplier name
+        ;;; </summary>
+        {DataMember}
+        public property Name, String
+            method get
+            proc
+                mreturn wrapper.Name
+            endmethod
+            method set
+            proc
+                wrapper.Name = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; addrss line 1
+        ;;; </summary>
+        {DataMember}
+        public property Address1, String
+            method get
+            proc
+                mreturn wrapper.Address1
+            endmethod
+            method set
+            proc
+                wrapper.Address1 = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; address line 2
+        ;;; </summary>
+        {DataMember}
+        public property Address2, String
+            method get
+            proc
+                mreturn wrapper.Address2
+            endmethod
+            method set
+            proc
+                wrapper.Address2 = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; address line 3
+        ;;; </summary>
+        {DataMember}
+        public property Address3, String
+            method get
+            proc
+                mreturn wrapper.Address3
+            endmethod
+            method set
+            proc
+                wrapper.Address3 = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; city
+        ;;; </summary>
+        {DataMember}
+        public property City, String
+            method get
+            proc
+                mreturn wrapper.City
+            endmethod
+            method set
+            proc
+                wrapper.City = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; post code
+        ;;; </summary>
+        {DataMember}
+        public property PostalCode, String
+            method get
+            proc
+                mreturn wrapper.PostalCode
+            endmethod
+            method set
+            proc
+                wrapper.PostalCode = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; web address
+        ;;; </summary>
+        {DataMember}
+        public property WebAddress, String
+            method get
+            proc
+                mreturn wrapper.WebAddress
+            endmethod
+            method set
+            proc
+                wrapper.WebAddress = value
+            endmethod
+        endproperty
+
+
+    endclass
+
+endnamespace

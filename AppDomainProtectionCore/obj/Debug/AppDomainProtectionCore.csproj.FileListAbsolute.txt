@@ -1,0 +1,4 @@
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtectionCore\bin\Debug\AppDomainProtectionCore.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtectionCore\bin\Debug\AppDomainProtectionCore.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtectionCore\obj\Debug\AppDomainProtectionCore.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtectionCore\obj\Debug\AppDomainProtectionCore.pdb

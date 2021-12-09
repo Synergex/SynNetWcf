@@ -1,0 +1,12 @@
+D:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\bin\Debug\AppDomainProtection.dll
+D:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\bin\Debug\AppDomainProtection.pdb
+D:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\obj\Debug\AppDomainProtection.dll
+D:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\obj\Debug\AppDomainProtection.pdb
+D:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\obj\Debug\AppDomainProtection.synprojResolveAssemblyReference.cache
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\bin\Debug\AppDomainProtection.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\bin\Debug\AppDomainProtection.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\bin\Debug\AppDomainProtectionCore.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\bin\Debug\AppDomainProtectionCore.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\obj\Debug\AppDomainProtection.synprojResolveAssemblyReference.cache
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\obj\Debug\AppDomainProtection.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\obj\Debug\AppDomainProtection.pdb

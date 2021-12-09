@@ -1,0 +1,53 @@
+
+import System.Collections.Generic
+import Synergex.SynergyDE.Select
+
+namespace PartsSystem
+	
+	;;; <summary>
+	;;; This partial class exposes CUSTOM methods for Part.
+	;;; </summary>
+	public partial class PartsSystemAPI
+
+;		public method PartsSystemAPI
+;			endparams
+;		proc
+;			data sts, i4
+;			xcall setlog("DAT","C:\Dev\Demos\AppDomainProtection\SynNetWcf\data",sts)
+;		endmethod
+
+		;;; <summary>
+		;;; Real all Part records from a supplier.
+		;;; </summary>
+		;;; <param name="aParts">Returned collection of Part objects (@List<Part>)</param>
+		;;; <returns></returns>
+		public method ReadSupplierParts, MethodStatus
+			required in  aSupplierId, String 
+			required out aParts, @List<Part>
+			required out aErrorMessage, String
+		proc
+			aErrorMessage = ""
+			data status, MethodStatus, MethodStatus.Success
+			
+			aParts = new List<Part>()
+			
+			try
+			begin
+				data rec, strPart
+				foreach rec in new Select(new From("DAT:parts.ism",rec),(Where)rec.Supplierid.eq.aSupplierId)
+					aParts.Add(new Part((String)rec))
+			end
+			catch (ex, @Exception)
+			begin
+				status = MethodStatus.FatalError
+				aErrorMessage = string.Format("Error while reading supplier parts: {0}",ex.Message)
+			end
+			endtry
+			
+			mreturn status
+			
+		endmethod
+
+	endclass
+	
+endnamespace

@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>"PartsSystem"</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ec5ade07-8b6a-461a-98bb-f5c09874ff40}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>PartsSystem</RootNamespace>
+    <AssemblyName>PartsSystem</AssemblyName>
+    <MainFile>Class.dbl</MainFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetPlatform>v45</TargetPlatform>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <DBL_qWarnLevel>3 - Don't display warnings levels higher than 3</DBL_qWarnLevel>
+    <DBL_qWarn>True</DBL_qWarn>
+    <DBLCmdOptions> -W3 -qstack</DBLCmdOptions>
+    <Language>Synergy</Language>
+    <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <ProjEnvVars>RPSMFIL=$(SolutionDir)rps\rpsmain.ism;RPSTFIL=$(SolutionDir)rps\rpstext.ism;</ProjEnvVars>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>PartsSystemKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Debug</DebugOptimize>
+    <DocumentationFile>bin\Debug\PartsSystem.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <SerializeAssembly>Auto</SerializeAssembly>
+    <RunVerifyPostCompile>true</RunVerifyPostCompile>
+    <LanguageCompatibilityLevel>100301</LanguageCompatibilityLevel>
+    <TargetRuntimeLevel>100301</TargetRuntimeLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Optimize</DebugOptimize>
+    <DocumentationFile>bin\Release\PartsSystem.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="synrnt">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataUtils.dbl" />
+    <Compile Include="MethodStatus.dbl" />
+    <Compile Include="Part.dbl" />
+    <Compile Include="PartsSystemAPI_Part.dbl" />
+    <Compile Include="PartsSystemAPI_Part_Custom.dbl" />
+    <Compile Include="PartsSystemAPI_ProductGroup.dbl" />
+    <Compile Include="PartsSystemAPI_Supplier.dbl" />
+    <Compile Include="PartWrapper.dbl" />
+    <Compile Include="ProductGroup.dbl" />
+    <Compile Include="ProductGroupWrapper.dbl" />
+    <Compile Include="Properties\AssemblyInfo.dbl" />
+    <Compile Include="Supplier.dbl" />
+    <Compile Include="SupplierWrapper.dbl" />
+    <Compile Include="SynergyEnvironment.dbl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppDomainProtection\AppDomainProtection.synproj">
+      <Name>AppDomainProtection</Name>
+      <Project>{730cac09-e5cf-441c-80d0-f0623ed1adbb}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PartsSystemKey.snk">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
+</Project>

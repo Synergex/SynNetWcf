@@ -1,0 +1,164 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Runtime.Serialization
+
+namespace PartsSystem
+
+    .include "SUPPLIER" repository, structure="strSupplier", end
+
+    {Serializable}
+    public class SupplierWrapper implements ISerializable
+
+        internal mSupplier, strSupplier
+
+        public method SupplierWrapper
+        proc
+            init mSupplier
+        endmethod
+
+        public method SupplierWrapper
+            info, @SerializationInfo
+            context, StreamingContext
+            this()
+        proc
+            data myType = ^typeof([#]byte)
+            mSupplier = (a)([#]byte)info.GetValue("Record",myType)
+        endmethod
+
+        public method GetObjectData, void
+            info, @SerializationInfo 
+            context, StreamingContext 
+        proc
+            data bytes, [#]byte, (a)mSupplier
+            info.AddValue("Record",bytes)
+        endmethod
+        
+        public property Record, String
+            method get
+            proc
+                mreturn (String)mSupplier
+            endmethod
+            method set
+            proc
+                mSupplier = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; supplier id (SUPPLIER_ID, A20)
+        ;;; </summary>
+        public property SupplierId, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.supplier_id)
+            endmethod
+            method set
+            proc
+                mSupplier.supplier_id = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; supplier name (NAME, A50)
+        ;;; </summary>
+        public property Name, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.name)
+            endmethod
+            method set
+            proc
+                mSupplier.name = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; addrss line 1 (ADDRESS_1, A50)
+        ;;; </summary>
+        public property Address1, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.address_1)
+            endmethod
+            method set
+            proc
+                mSupplier.address_1 = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; address line 2 (ADDRESS_2, A50)
+        ;;; </summary>
+        public property Address2, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.address_2)
+            endmethod
+            method set
+            proc
+                mSupplier.address_2 = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; address line 3 (ADDRESS_3, A50)
+        ;;; </summary>
+        public property Address3, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.address_3)
+            endmethod
+            method set
+            proc
+                mSupplier.address_3 = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; city (CITY, A30)
+        ;;; </summary>
+        public property City, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.city)
+            endmethod
+            method set
+            proc
+                mSupplier.city = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; post code (POSTAL_CODE, A10)
+        ;;; </summary>
+        public property PostalCode, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.postal_code)
+            endmethod
+            method set
+            proc
+                mSupplier.postal_code = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; web address (WEB_ADDRESS, A78)
+        ;;; </summary>
+        public property WebAddress, String
+            method get
+            proc
+                mreturn %atrim(mSupplier.web_address)
+            endmethod
+            method set
+            proc
+                mSupplier.web_address = value
+            endmethod
+        endproperty
+
+    endclass
+
+endnamespace

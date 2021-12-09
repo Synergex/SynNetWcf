@@ -1,0 +1,15 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+
+namespace PartsSystem
+
+    public enum MethodStatus
+        Success
+        Fail
+        FatalError
+    endenum
+
+endnamespace

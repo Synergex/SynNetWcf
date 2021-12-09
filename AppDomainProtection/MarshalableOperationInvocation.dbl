@@ -1,0 +1,149 @@
+
+
+
+
+
+
+
+
+
+
+
+
+; THIS CODE IS NOT CURRENTLY USED. THE C# VERSION OF THE CODE IN THE
+; APPDOMAINPROTECTIONCORE ASSEMBLY IS CURRENTLY BEING USED.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;;*****************************************************************************
+;;
+;; Title:       MarshalableOperationInvocation.dbl
+;;
+;; Type:        Class
+;;
+;; Description: Declares methods that take an object and an array of parameters
+;;              extracted from a message, invoke a method on that object with
+;;              those parameters, and return the method's return value and
+;;              output parameters.
+;;
+;; Date:        17th June 2015
+;;
+;; Authors:     Jeff Greene      Synergex Development
+;;                               http://www.synergex.com
+;;
+;;*****************************************************************************
+;;
+;; Copyright (c) 2015, Synergex International, Inc.
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+
+;import System
+;import System.Reflection
+;import System.Threading.Tasks
+;import System.ServiceModel.Dispatcher
+;
+;.array 0
+;
+;namespace AppDomainProtection
+;	
+;	public class MarshalableOperationInvocation implements IOperationInvoker
+;		
+;		readonly static _invokeWrapper, @MethodInfo, ^typeof(IsolatableServiceBaseBase).GetMethod("InvokeWrapper", BindingFlags.Public | BindingFlags.Instance)
+;		readonly static _invokeWrapperNoGeneric, @MethodInfo, ^typeof(IsolatableServiceBaseBase).GetMethod("InvokeWrapperPlain", BindingFlags.Public | BindingFlags.Instance)
+;
+;		_taskMethod, @MethodInfo
+;		_taskType, @Type
+;		readonly _specializedInvokeWrapper, @MethodInfo
+;				
+;		public method MarshalableOperationInvocation
+;			taskMethod, @MethodInfo 
+;			taskType, @Type 
+;			endparams
+;		proc
+;			_taskMethod = taskMethod
+;			_taskType = taskType
+;			_specializedInvokeWrapper = taskType == _invokeWrapper.ReturnType ? _invokeWrapperNoGeneric : _invokeWrapper.MakeGenericMethod(taskType)
+;		endmethod
+;	
+;		public property IsSynchronous, boolean
+;			method get
+;			proc
+;				mreturn false
+;			endmethod
+;		endproperty
+;		
+;		public method AllocateInputs, [#]@object
+;			endparams
+;		proc
+;			mreturn new object[_taskMethod.GetParameters().Length] 
+;		endmethod
+;		
+;		public method Invoke, @object
+;			instance, @object 
+;			inputs, [#]@object 
+;			out outputs, [#]@object 
+;			endparams
+;		proc
+;			throw new NotImplementedException()
+;		endmethod
+;		
+;		public method InvokeBegin, @IAsyncResult
+;			instance, @object 
+;			inputs, [#]@object 
+;			callback, @AsyncCallback 
+;			state, @object 
+;			endparams
+;		proc
+;			data completionSource = new MarshalableCompletionSource<object>(callback, state)
+;			_specializedInvokeWrapper.Invoke(instance, new object[#] {completionSource, _taskMethod, inputs})
+;			mreturn completionSource.Task
+;		endmethod
+;		
+;		public method InvokeEnd, @object
+;			instance, @object 
+;			out outputs, [#]@object 
+;			result, @IAsyncResult 
+;			endparams
+;		proc
+;			outputs = new object[0] 
+;			mreturn ((@Task<object>)result).Result
+;		endmethod
+;
+;	endclass
+;
+;endnamespace

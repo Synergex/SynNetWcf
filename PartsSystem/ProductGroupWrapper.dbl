@@ -1,0 +1,80 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Runtime.Serialization
+
+namespace PartsSystem
+
+    .include "PRODUCT_GROUP" repository, structure="strProductGroup", end
+
+    {Serializable}
+    public class ProductGroupWrapper implements ISerializable
+
+        internal mProductGroup, strProductGroup
+
+        public method ProductGroupWrapper
+        proc
+            init mProductGroup
+        endmethod
+
+        public method ProductGroupWrapper
+            info, @SerializationInfo
+            context, StreamingContext
+            this()
+        proc
+            data myType = ^typeof([#]byte)
+            mProductGroup = (a)([#]byte)info.GetValue("Record",myType)
+        endmethod
+
+        public method GetObjectData, void
+            info, @SerializationInfo 
+            context, StreamingContext 
+        proc
+            data bytes, [#]byte, (a)mProductGroup
+            info.AddValue("Record",bytes)
+        endmethod
+        
+        public property Record, String
+            method get
+            proc
+                mreturn (String)mProductGroup
+            endmethod
+            method set
+            proc
+                mProductGroup = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; group id (GROUP_ID, A20)
+        ;;; </summary>
+        public property GroupId, String
+            method get
+            proc
+                mreturn %atrim(mProductGroup.group_id)
+            endmethod
+            method set
+            proc
+                mProductGroup.group_id = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; description (DESCRIPTION, A100)
+        ;;; </summary>
+        public property Description, String
+            method get
+            proc
+                mreturn %atrim(mProductGroup.description)
+            endmethod
+            method set
+            proc
+                mProductGroup.description = value
+            endmethod
+        endproperty
+
+    endclass
+
+endnamespace

@@ -1,0 +1,301 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System.Collections.Generic
+import Synergex.SynergyDE.Select
+
+namespace PartsSystem
+
+    ;;; <summary>
+    ;;; This partial class exposes the CRUD methods for Part.
+    ;;; </summary>
+    public partial class PartsSystemAPI
+
+        ;;; <summary>
+        ;;; Create a Part record
+        ;;; </summary>
+        ;;; <param name="aPart">Passed Part object (@Part)</param>
+        ;;; <param name="aErrorMessage">Returned error message (blank if return value is MethodStatus.Success)</param>
+        ;;; <returns>Method status</returns>
+        public method CreatePart, MethodStatus
+            required in  aPart, @Part
+            required out aErrorMessage, string
+        proc
+            data status = MethodStatus.Success
+            data ch = 0
+
+            try
+            begin
+                open(ch,u:i,"DAT:parts.ism")
+                store(ch,aPart.Record)
+                aErrorMessage = ""
+            end
+            catch (ex, @NoFileFoundException)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = "File not found, check appSettings in Web.config or App.config!"
+            end
+            catch (ex, @DuplicateException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "Record already exists!"
+            end
+            catch (ex, @Exception)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = String.Format("Error while creating record: {0}",ex.Message)
+            end
+            finally
+            begin
+                if (ch&&chopen(ch))
+                    close ch
+            end
+            endtry
+
+            mreturn status
+
+        endmethod
+
+        ;;; <summary>
+        ;;; Read a Part record by primary key (ID: primary part id)
+        ;;; </summary>
+        ;;; <param name="aId">Passed part ID (string)</param>
+        ;;; <param name="aPart">Returned Part object (@Part)</param>
+        ;;; <param name="aGrfa">Returned GRFA data (byte array)</param>
+        ;;; <param name="aErrorMessage">Returned error message (blank if return value is MethodStatus.Success)</param>
+        ;;; <returns>Method status</returns>
+        public method ReadPart, MethodStatus
+            required in  aId, string
+            required out aPart, @Part
+            required out aGrfa, [#]byte
+            required out aErrorMessage, string
+        proc
+            data status = MethodStatus.Success
+            data ch = 0
+
+            data partRec, strPart
+            init partRec
+            partRec.id = aId
+
+            try
+            begin
+                data grfa, a10
+                open(ch=0,I:I,"DAT:parts.ism")
+                read(ch,partRec,%keyval(ch,partRec,0),GETRFA:grfa)
+                aPart = new Part((String)partRec)
+                aGrfa = grfa
+                aErrorMessage = ""
+            end
+            catch (ex, @EndOfFileException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "Record not found!"
+            end
+            catch (ex, @KeyNotSameException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "Record not found!"
+            end
+            catch (ex, @Exception)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = String.Format("Error while reading record: {0}",ex.Message)
+            end
+            finally
+            begin
+                if (ch&&chopen(ch))
+                    close ch
+            end
+            endtry
+
+            mreturn status
+
+        endmethod
+
+        ;;; <summary>
+        ;;; Real all Part records
+        ;;; </summary>
+        ;;; <param name="aParts">Returned collection of Part objects (@List<Part>)</param>
+        ;;; <param name="aErrorMessage">Returned error message (blank if return value is MethodStatus.Success)</param>
+        ;;; <returns>Method status</returns>
+        public method ReadAllParts, MethodStatus
+            required out aParts, @List<Part>
+            required out aErrorMessage, string
+        proc
+            aErrorMessage = ""
+            data status = MethodStatus.Success
+            aParts = new List<Part>()
+
+            try
+            begin
+                data partRec, strPart
+                foreach partRec in new Select(new From("DAT:parts.ism",partRec))
+                    aParts.Add(new Part((String)partRec))
+            end
+            catch (ex, @Exception)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = String.Format("Error while reading records: {0}",ex.Message)
+            end
+            endtry
+
+            mreturn status
+
+        endmethod
+
+        ;;; <summary>
+        ;;; Update a Part record
+        ;;; </summary>
+        ;;; <param name="aPart">Passed/returned Part object (@Part)</param>
+        ;;; <param name="aGrfa">Passed/returned GRFA</param>
+        ;;; <param name="aErrorMessage">Returned error message (blank if return value is MethodStatus.Success)</param>
+        ;;; <returns>Method status</returns>
+        public method UpdatePart, MethodStatus
+            required inout aPart, @Part
+            required inout aGrfa, [#]byte
+            required out aErrorMessage, string
+        proc
+            data status = MethodStatus.Success
+            data ch = 0
+            data partrec, strPart
+            data grfa, a10
+
+            try
+            begin
+                open(ch,u:i,"DAT:parts.ism")
+                ;;Attempt to read the original record by GRFA to make sure that nobody else has modified or deleted it
+                grfa = aGrfa
+                read(ch,partrec,RFA:grfa,GETRFA:grfa)
+                write(ch,aPart.Record,,GETRFA:grfa)
+                aGrfa = grfa
+                aErrorMessage = ""
+            end
+            catch (ex, @RecordNotSameException)
+            begin
+                ;;Failed to lock the original record, it must have been changed
+                ;;by another process since this user obtained it. We'll return
+                ;;the new record and it's GRFA to the user
+                aPart = new Part((String)partrec)
+                aGrfa = grfa
+                status = MethodStatus.Fail
+                aErrorMessage = "Record was changed by another user! A copy of the current record was returned."
+            end
+            catch (ex, @DuplicateException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "Duplicate key error!"
+            end
+            catch (ex, @Exception)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = String.Format("Error while updating record: {0}",ex.Message)
+            end
+            finally
+            begin
+                if (ch&&chopen(ch))
+                    close ch
+            end
+            endtry
+
+            mreturn status
+
+        endmethod
+
+        ;;; <summary>
+        ;;; Delete a Part record
+        ;;; </summary>
+        ;;; <param name="aGrfa">Passed GRFA (string)</param>
+        ;;; <param name="aErrorMessage">Returned error message (blank if return value is MethodStatus.Success)</param>
+        ;;; <returns>Method status</returns>
+        public method DeletePart, MethodStatus
+            required in aGrfa, [#]byte
+            required out aErrorMessage, string
+        proc
+            data status = MethodStatus.Success
+            data ch = 0
+            data partrec, strPart
+            data grfa, a10
+
+            try
+            begin
+                open(ch,u:i,"DAT:parts.ism")
+                ;;Attempt to read the original record by GRFA to make sure that nobody else has modified or deleted it
+                grfa = aGrfa
+                read(ch,partrec,RFA:grfa)
+                delete(ch)
+                aErrorMessage = ""
+            end
+            catch (ex, @RecordNotSameException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "The record was updated by another user!"
+            end
+            catch (ex, @Exception)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = String.Format("Error while deleting record: {0}",ex.Message)
+            end
+            finally
+            begin
+                if (ch&&chopen(ch))
+                    close ch
+            end
+            endtry
+
+            mreturn status
+
+        endmethod
+
+        ;;; <summary>
+        ;;; Determine if a Part record exists
+        ;;; </summary>
+        ;;; <param name="aId">Passed part ID (string)</param>
+        ;;; <param name="aErrorMessage">Returned error message (blank if return value is MethodStatus.Success)</param>
+        ;;; <returns>Method status</returns>
+        public method PartExists, MethodStatus
+            required in  aId, string
+            required out aErrorMessage, string
+        proc
+            data status = MethodStatus.Success
+            data ch = 0
+            data partrec, strPart
+
+            init partrec
+            partrec.id = aId
+
+            try
+            begin
+                open(ch,I:I,"DAT:parts.ism")
+                find(ch,,%keyval(ch,partrec,0))
+                aErrorMessage = ""
+            end
+            catch (ex, @EndOfFileException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "Record not found!"
+            end
+            catch (ex, @KeyNotSameException)
+            begin
+                status = MethodStatus.Fail
+                aErrorMessage = "Record not found!"
+            end
+            catch (ex, @Exception)
+            begin
+                status = MethodStatus.FatalError
+                aErrorMessage = String.Format("Error while locating record: {0}",ex.Message)
+            end
+            finally
+            begin
+                if (ch&&chopen(ch))
+                    close ch
+            end
+            endtry
+
+            mreturn status
+
+        endmethod
+
+    endclass
+
+endnamespace

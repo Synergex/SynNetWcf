@@ -1,0 +1,185 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Runtime.Serialization
+
+namespace PartsSystem
+
+    {DataContract}
+    {Serializable}
+    public cls class Part
+
+        {IgnoreDataMember}
+        private wrapper, @PartWrapper
+
+        ;;; <summary>
+        ;;; Construct an empty Part object
+        ;;; </summary>
+        public method Part
+        proc
+            wrapper = new PartWrapper()
+        endmethod
+
+        ;;; <summary>
+        ;;; Construct a Part object containing the data from a PART record
+        ;;; </summary>
+        ;;; <param name="aPart">Passed Part record</param>
+        internal method Part
+            required in aPart, String
+            this()
+        proc
+            ;;Save the record
+            wrapper.Record = aPart
+        endmethod
+
+        ;;; <summary>
+        ;;; When WCF de-serializes data back into an object it uses "vudu" to construct an
+        ;;; object in such a magical way that the constructors are not called!!! This causes
+        ;;; problems because we need to instantiate our "wrapper" object. This method solves
+        ;;; that problem by doing the "new" when deserialization takes place.
+        ;;; </summary>
+        {OnDeserializing}
+        private method SetValuesOnDeserializing, void
+            context, StreamingContext
+        proc
+            wrapper = new PartWrapper()
+        endmethod
+
+        ;;; <summary>
+        ;;; Provide a mechanism for INTERNAL code to be able to get the data as a record.
+        ;;; </summary>
+        internal property Record, String
+            method get
+            proc
+                mreturn wrapper.Record
+            endmethod
+        endproperty
+
+        ;;Expose the fields in the Synergy record as properties, using .NET types
+
+        ;;; <summary>
+        ;;; part ID
+        ;;; </summary>
+        {DataMember}
+        public property Id, String
+            method get
+            proc
+                mreturn wrapper.Id
+            endmethod
+            method set
+            proc
+                wrapper.Id = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; Group ID
+        ;;; </summary>
+        {DataMember}
+        public property Groupid, String
+            method get
+            proc
+                mreturn wrapper.Groupid
+            endmethod
+            method set
+            proc
+                wrapper.Groupid = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; supplier id
+        ;;; </summary>
+        {DataMember}
+        public property Supplierid, String
+            method get
+            proc
+                mreturn wrapper.Supplierid
+            endmethod
+            method set
+            proc
+                wrapper.Supplierid = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; Description
+        ;;; </summary>
+        {DataMember}
+        public property Description, String
+            method get
+            proc
+                mreturn wrapper.Description
+            endmethod
+            method set
+            proc
+                wrapper.Description = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; Technical info
+        ;;; </summary>
+        {DataMember}
+        public property TechnicalInfo, String
+            method get
+            proc
+                mreturn wrapper.TechnicalInfo
+            endmethod
+            method set
+            proc
+                wrapper.TechnicalInfo = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; quantity in stock
+        ;;; </summary>
+        {DataMember}
+        public property Quantity, int
+            method get
+            proc
+                mreturn wrapper.Quantity
+            endmethod
+            method set
+            proc
+                wrapper.Quantity = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; cost price
+        ;;; </summary>
+        {DataMember}
+        public property CostPrice, decimal
+            method get
+            proc
+                mreturn wrapper.CostPrice
+            endmethod
+            method set
+            proc
+                wrapper.CostPrice = value
+            endmethod
+        endproperty
+
+        ;;; <summary>
+        ;;; 
+        ;;; </summary>
+        {DataMember}
+        public property Spare, String
+            method get
+            proc
+                mreturn wrapper.Spare
+            endmethod
+            method set
+            proc
+                wrapper.Spare = value
+            endmethod
+        endproperty
+
+
+    endclass
+
+endnamespace

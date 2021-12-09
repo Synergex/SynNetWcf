@@ -1,0 +1,152 @@
+;;*****************************************************************************
+;;
+;; Title:       AppDomainPoolManager.dbl
+;;
+;; Type:        Class
+;;
+;; Description: Implements a pooling mechanism for AppDomains
+;;
+;; Date:        9th January 2014
+;;
+;; Authors:     Steve Ives       Synergex Professional Services Group
+;;              Jeff Greene      Synergex Development
+;;                               http://www.synergex.com
+;;
+;;*****************************************************************************
+;;
+;; Copyright (c) 2014, Synergex International, Inc.
+;; All rights reserved.
+;;
+;; Redistribution and use in source and binary forms, with or without
+;; modification, are permitted provided that the following conditions are met:
+;;
+;; * Redistributions of source code must retain the above copyright notice,
+;;   this list of conditions and the following disclaimer.
+;;
+;; * Redistributions in binary form must reproduce the above copyright notice,
+;;   this list of conditions and the following disclaimer in the documentation
+;;   and/or other materials provided with the distribution.
+;;
+;; THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+;; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+;; IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+;; ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+;; LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+;; CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+;; SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+;; INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+;; CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+;; ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+;; POSSIBILITY OF SUCH DAMAGE.
+;;
+;;*****************************************************************************
+
+import System.Collections.Generic
+import System.IO
+import System.Reflection
+import System.Threading
+
+namespace AppDomainProtection
+
+	;;; <summary>
+	;;; Implements a pooling mechanism for AppDomains.
+	;;; </summary>
+	public static class AppDomainPoolManager
+
+		private static pool, @List<AppDomain>
+
+		;;; <summary>
+		;;; Initialize the pool on first use
+		;;; </summary>
+		static method AppDomainPoolManager
+			endparams
+		proc
+			pool = new List<AppDomain>()
+		endmethod
+
+		;;; <summary>
+		;;; Allocate an AppDomain from the pool, or create a new one if
+		;;; the pool is empty.
+		;;; </summary>
+		;;; <param name="isNew">Indicates if a brand new AppDomain was created (so that the Initialize method may be called).</param>
+		public static method Allocate, @AppDomain
+			endparams
+		proc
+			data ad, @AppDomain
+			
+			try
+			begin
+				;;Acquire an exclusive lock to protect against multiple threads passing
+				;;through this code at the same time.
+				Monitor.Enter(^typeof(AppDomainPoolManager))
+				;;Do we have an AppDomain in the pool?
+				if (pool.Count>0)
+				begin
+					;;Yes, remove it from the pool and use it
+					ad = pool[0]
+					pool.RemoveAt(0)
+				end
+			end
+			finally
+			begin
+				;;Release the lock.
+				Monitor.Exit(^typeof(AppDomainPoolManager))
+			end
+			endtry
+		
+			;;If we didn't have an AppDomain in the pool then we'll create a new one.
+			if (ad==^null)
+			begin
+				
+				data baseFolder, String, AppDomain.CurrentDomain.BaseDirectory
+				;;IMPORTANT:
+				;;
+				;;The shadowCopyFiles property below, when set to true, causes
+				;;a COPY of assemblies to be loaded into the AppDomain, rather than loading the
+				;;ACTUAL assembly. The advantage of specifying true is that the ACTUAL assembly is not locked by IIS,
+				;;which would in turn prevent the assembly being re-built in Visual Studio without first restarting IIS.
+				;;The downside is that more memory is used (because a different copy of each assembly is loaded into
+				;;each AppDomain. Although a PAIN, the best thing to do is specify true during development,
+				;;and change it to false before a final build for production deployment.
+				data setup = new AppDomainSetup()
+				setup.ApplicationBase = baseFolder
+				setup.DisallowApplicationBaseProbing = false
+				setup.LoaderOptimization = LoaderOptimization.MultiDomain
+				setup.PrivateBinPath = AppDomain.CurrentDomain.RelativeSearchPath
+				setup.ShadowCopyFiles = true
+				ad = AppDomain.CreateDomain(Guid.NewGuid().ToString(), ^null, setup)
+			end
+
+			mreturn ad
+		
+		endmethod
+
+		;;; <summary>
+		;;; Returns an existing AppDoman to the pool.
+		;;; </summary>
+		public static method ReturnToPool, void
+			required inout ad, @AppDomain
+			endparams
+		proc
+			try
+			begin
+				;;Acquire an exclusive lock to protect against multiple threads passing
+				;;through this code at the same time.
+				Monitor.Enter(^typeof(AppDomainPoolManager))
+				;;Add the AppDomain to the pool
+				pool.Add(ad)
+				;;Remove the callers reference to the AppDomain
+				ad = ^null
+			end
+			finally
+			begin
+				;;Release the lock.
+				Monitor.Exit(^typeof(AppDomainPoolManager))
+			end
+			endtry
+		endmethod
+
+	endclass
+
+endnamespace
+

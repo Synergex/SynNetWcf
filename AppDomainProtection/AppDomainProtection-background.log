@@ -1,0 +1,7 @@
+"C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\IsolatableServiceBase.dbl"(46): import AppDomainProtectionCore
+%DBL-E-IMPORT, Namespace AppDomainProtectionCore not found
+"C:\Dev\Demos\AppDomainProtection\SynNetWcf\AppDomainProtection\IsolatableServiceBase.dbl"(50):         public class IsolatableServiceBase extends IsolatableServiceBaseBase
+%DBL-E-NFND, IsolatableServiceBaseBase not found
+%DBL-E-NOASM, Assembly file AppDomainPoolManager.exe not created
+Errors:         2
+
