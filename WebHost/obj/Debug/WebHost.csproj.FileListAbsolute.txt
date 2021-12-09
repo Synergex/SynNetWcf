@@ -1,0 +1,17 @@
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\AppDomainProtection.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\AppDomainProtectionCore.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\PartsSystem.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\WcfServiceLibrary.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\AppDomainProtection.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\PartsSystem.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\WcfServiceLibrary.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\AppDomainProtectionCore.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\AppDomainProtection.xml
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\PartsSystem.xml
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\WcfServiceLibrary.xml
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\obj\Debug\WebHost.csprojResolveAssemblyReference.cache
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\obj\Debug\WebHost.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\obj\Debug\WebHost.pdb
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\WebHost.dll.config
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\WebHost.dll
+C:\Dev\Demos\AppDomainProtection\SynNetWcf\WebHost\bin\WebHost.pdb
