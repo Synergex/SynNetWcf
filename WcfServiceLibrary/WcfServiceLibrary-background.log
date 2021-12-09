@@ -1,0 +1,5 @@
+"C:\Dev\Demos\AppDomainProtection\SynNetWcf\WcfServiceLibrary\IPartsService.dbl"(11): import AppDomainProtectionCore
+%DBL-E-IMPORT, Namespace AppDomainProtectionCore not found
+%DBL-E-NOASM, Assembly file IPartsService.exe not created
+Errors:         1
+

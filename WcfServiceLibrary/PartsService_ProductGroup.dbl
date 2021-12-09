@@ -1,0 +1,131 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Collections.Generic
+import System.Runtime.Serialization
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial class PartsService
+
+        public method CreateProductGroup, @Task<PartsServiceResponse>
+            required in aProductGroup, @ProductGroup
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.CreateProductGroup(aProductGroup,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ReadProductGroup, @Task<ProductGroupReadResponse>
+            required in  aGroupId, string
+        proc
+            data completionSource = new TaskCompletionSource<ProductGroupReadResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpProductGroup, @ProductGroup
+                data tmpGrfa, [#]byte
+                data tmpErrorMessage, string
+                data response = new ProductGroupReadResponse()
+                response.Status = api.ReadProductGroup(aGroupId,tmpProductGroup,tmpGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpProductGroup
+                response.Grfa = tmpGrfa
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ReadAllProductGroups, @Task<ProductGroupReadAllResponse>
+        proc
+            data completionSource = new TaskCompletionSource<ProductGroupReadAllResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpProductGroups, @List<ProductGroup>
+                data tmpErrorMessage, string
+                data response = new ProductGroupReadAllResponse()
+                response.Status = api.ReadAllProductGroups(tmpProductGroups,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpProductGroups
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method UpdateProductGroup, @Task<ProductGroupUpdateResponse>
+            required in aProductGroup, @ProductGroup
+            required in aGrfa, [#]byte
+        proc
+            data completionSource = new TaskCompletionSource<ProductGroupUpdateResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpProductGroup, @ProductGroup, aProductGroup
+                data tmpGrfa, [#]byte, aGrfa
+                data tmpErrorMessage, string
+                data response = new ProductGroupUpdateResponse()
+                response.Status = api.UpdateProductGroup(tmpProductGroup,tmpGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpProductGroup
+                response.Grfa = tmpGrfa
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method DeleteProductGroup, @Task<PartsServiceResponse>
+            required in aGrfa, [#]byte
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.DeleteProductGroup(aGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ProductGroupExists, @Task<PartsServiceResponse>
+            required in aGroupId, string
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.ProductGroupExists(aGroupId,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+    endclass
+
+endnamespace

@@ -1,0 +1,131 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Collections.Generic
+import System.Runtime.Serialization
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial class PartsService
+
+        public method CreatePart, @Task<PartsServiceResponse>
+            required in aPart, @Part
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.CreatePart(aPart,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ReadPart, @Task<PartReadResponse>
+            required in  aId, string
+        proc
+            data completionSource = new TaskCompletionSource<PartReadResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpPart, @Part
+                data tmpGrfa, [#]byte
+                data tmpErrorMessage, string
+                data response = new PartReadResponse()
+                response.Status = api.ReadPart(aId,tmpPart,tmpGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpPart
+                response.Grfa = tmpGrfa
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ReadAllParts, @Task<PartReadAllResponse>
+        proc
+            data completionSource = new TaskCompletionSource<PartReadAllResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpParts, @List<Part>
+                data tmpErrorMessage, string
+                data response = new PartReadAllResponse()
+                response.Status = api.ReadAllParts(tmpParts,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpParts
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method UpdatePart, @Task<PartUpdateResponse>
+            required in aPart, @Part
+            required in aGrfa, [#]byte
+        proc
+            data completionSource = new TaskCompletionSource<PartUpdateResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpPart, @Part, aPart
+                data tmpGrfa, [#]byte, aGrfa
+                data tmpErrorMessage, string
+                data response = new PartUpdateResponse()
+                response.Status = api.UpdatePart(tmpPart,tmpGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpPart
+                response.Grfa = tmpGrfa
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method DeletePart, @Task<PartsServiceResponse>
+            required in aGrfa, [#]byte
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.DeletePart(aGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method PartExists, @Task<PartsServiceResponse>
+            required in aId, string
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.PartExists(aId,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+    endclass
+
+endnamespace

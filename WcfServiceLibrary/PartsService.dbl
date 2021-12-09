@@ -1,0 +1,18 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Collections.Generic
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial class PartsService extends IsolatableServiceBase implements IPartsService, IAppDomainPoolable
+
+    endclass
+
+endnamespace

@@ -1,0 +1,33 @@
+
+import System
+import System.Collections.Generic
+import System.Runtime.Serialization
+import System.Text
+import System.Threading.Tasks
+import System.ServiceModel
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial interface IPartsService
+
+        {OperationContract}
+        method ReadSupplierParts, @Task<ReadSupplierPartsResponse>
+            required in  aSupplierId, String
+        endmethod
+
+    endinterface
+
+    {DataContract}
+    {Serializable}
+    public class ReadSupplierPartsResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @List<Part>
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+endnamespace

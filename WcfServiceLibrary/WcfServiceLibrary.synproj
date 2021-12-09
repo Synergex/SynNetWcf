@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>"WcfServiceLibrary"</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{200a4015-8bf6-4e25-a80e-d0c5f1b1c61e}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WcfServiceLibrary</RootNamespace>
+    <AssemblyName>WcfServiceLibrary</AssemblyName>
+    <MainFile>Service1.dbl</MainFile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetPlatform>v45</TargetPlatform>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <DBL_qWarnLevel>3 - Don't display warnings levels higher than 3</DBL_qWarnLevel>
+    <DBL_qWarn>True</DBL_qWarn>
+    <DBLCmdOptions> -W3 -qstack</DBLCmdOptions>
+    <Language>Synergy</Language>
+    <DBL_unQulRecStm>Stack</DBL_unQulRecStm>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <ProjEnvVars>RPSMFIL=$(SolutionDir)rps\rpsmain.ism;RPSTFIL=$(SolutionDir)rps\rpstext.ism;</ProjEnvVars>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>WcfServiceLibraryKey.snk</AssemblyOriginatorKeyFile>
+    <StartupObject>(Not set)</StartupObject>
+    <ApplicationIcon />
+    <ResourceType>Icon</ResourceType>
+    <ResourceName />
+    <NoWin32Manifest />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Debug</DebugOptimize>
+    <DocumentationFile>bin\Debug\WcfServiceLibrary.xml</DocumentationFile>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <SerializeAssembly>Auto</SerializeAssembly>
+    <RunVerifyPostCompile>true</RunVerifyPostCompile>
+    <LanguageCompatibilityLevel>100301</LanguageCompatibilityLevel>
+    <TargetRuntimeLevel>100301</TargetRuntimeLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+    <OutputPath>bin\Release\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DebugOptimize>Optimize</DebugOptimize>
+    <DocumentationFile>bin\Release\WcfServiceLibrary.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="synrnt">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IPartsService.dbl" />
+    <Compile Include="IPartsService_Custom.dbl" />
+    <Compile Include="IPartsService_Part.dbl" />
+    <Compile Include="IPartsService_ProductGroup.dbl" />
+    <Compile Include="IPartsService_Supplier.dbl" />
+    <Compile Include="PartsService.dbl" />
+    <Compile Include="PartsService_Custom.dbl" />
+    <Compile Include="PartsService_Part.dbl" />
+    <Compile Include="PartsService_ProductGroup.dbl" />
+    <Compile Include="PartsService_Supplier.dbl" />
+    <Compile Include="Properties\AssemblyInfo.dbl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppDomainProtectionCore\AppDomainProtectionCore.csproj">
+      <Name>AppDomainProtectionCore</Name>
+      <Project>{7169e122-bcee-43cb-81e9-db45c7937475}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\AppDomainProtection\AppDomainProtection.synproj">
+      <Name>AppDomainProtection</Name>
+      <Project>{730cac09-e5cf-441c-80d0-f0623ed1adbb}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\PartsSystem\PartsSystem.synproj">
+      <Name>PartsSystem</Name>
+      <Project>{ec5ade07-8b6a-461a-98bb-f5c09874ff40}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="WcfServiceLibraryKey.snk">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Synergex\VS2010\Synergex.SynergyDE.targets" />
+</Project>

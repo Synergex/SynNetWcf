@@ -1,0 +1,99 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Collections.Generic
+import System.Runtime.Serialization
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial interface IPartsService
+
+        {OperationContract}
+        method CreateSupplier, @Task<PartsServiceResponse>
+            required in aSupplier, @Supplier
+        endmethod
+
+        {OperationContract}
+        method ReadSupplier, @Task<SupplierReadResponse>
+            required in  aSupplierId, string
+        endmethod
+
+        {OperationContract}
+        method ReadAllSuppliers, @Task<SupplierReadAllResponse>
+        endmethod
+
+        {OperationContract}
+        method UpdateSupplier, @Task<SupplierUpdateResponse>
+            required in aSupplier, @Supplier
+            required in aGrfa, [#]byte
+        endmethod
+
+        {OperationContract}
+        method DeleteSupplier, @Task<PartsServiceResponse>
+            required in aGrfa, [#]byte
+        endmethod
+
+        {OperationContract}
+        method SupplierExists, @Task<PartsServiceResponse>
+            required in aSupplierId, string
+        endmethod
+
+    endinterface
+
+    {DataContract}
+    {Serializable}
+    public class SupplierReadResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @Supplier
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+        {DataMember}
+        public property Grfa, [#]byte
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+    {DataContract}
+    {Serializable}
+    public class SupplierReadAllResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @List<Supplier>
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+    {DataContract}
+    {Serializable}
+    public class SupplierUpdateResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @Supplier
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+        {DataMember}
+        public property Grfa, [#]byte
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+endnamespace

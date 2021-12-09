@@ -1,0 +1,31 @@
+
+import System
+import System.Collections.Generic
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+	
+	public partial class PartsService
+		
+		public method ReadSupplierParts, @Task<ReadSupplierPartsResponse>
+			required in  aSupplierId, String
+			endparams
+		proc
+			data completionSource = new TaskCompletionSource<ReadSupplierPartsResponse>()
+			lambda curryParams()
+			begin
+				data api, @PartsSystemAPI, new PartsSystemAPI()
+				data tmpParts, @List<Part>
+				data tmpErrorMessage, String
+				completionSource.SetResult(new ReadSupplierPartsResponse() { Status = api.ReadSupplierParts(aSupplierId,tmpParts,tmpErrorMessage), ErrorMessage = tmpErrorMessage, Result = tmpParts} )
+			end
+			this.ServiceDispatcher.Dispatch(curryParams)
+			mreturn completionSource.Task
+		endmethod
+		
+	endclass
+
+endnamespace

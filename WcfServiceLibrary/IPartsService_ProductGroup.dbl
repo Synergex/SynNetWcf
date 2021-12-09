@@ -1,0 +1,99 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Collections.Generic
+import System.Runtime.Serialization
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial interface IPartsService
+
+        {OperationContract}
+        method CreateProductGroup, @Task<PartsServiceResponse>
+            required in aProductGroup, @ProductGroup
+        endmethod
+
+        {OperationContract}
+        method ReadProductGroup, @Task<ProductGroupReadResponse>
+            required in  aGroupId, string
+        endmethod
+
+        {OperationContract}
+        method ReadAllProductGroups, @Task<ProductGroupReadAllResponse>
+        endmethod
+
+        {OperationContract}
+        method UpdateProductGroup, @Task<ProductGroupUpdateResponse>
+            required in aProductGroup, @ProductGroup
+            required in aGrfa, [#]byte
+        endmethod
+
+        {OperationContract}
+        method DeleteProductGroup, @Task<PartsServiceResponse>
+            required in aGrfa, [#]byte
+        endmethod
+
+        {OperationContract}
+        method ProductGroupExists, @Task<PartsServiceResponse>
+            required in aGroupId, string
+        endmethod
+
+    endinterface
+
+    {DataContract}
+    {Serializable}
+    public class ProductGroupReadResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @ProductGroup
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+        {DataMember}
+        public property Grfa, [#]byte
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+    {DataContract}
+    {Serializable}
+    public class ProductGroupReadAllResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @List<ProductGroup>
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+    {DataContract}
+    {Serializable}
+    public class ProductGroupUpdateResponse extends PartsServiceResponse
+        {DataMember}
+        public property Result, @ProductGroup
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+        {DataMember}
+        public property Grfa, [#]byte
+            method get
+            endmethod
+            method set
+            endmethod
+        endproperty
+    endclass
+
+endnamespace

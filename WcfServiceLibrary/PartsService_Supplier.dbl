@@ -1,0 +1,131 @@
+;;******************************************************************************
+;; WARNING: THIS FILE WAS CODE GENERATED. CHANGES MAY BE LOST IF REGENERATED
+;;******************************************************************************
+
+import System
+import System.Collections.Generic
+import System.Runtime.Serialization
+import System.ServiceModel
+import System.Threading.Tasks
+import AppDomainProtection
+import PartsSystem
+
+namespace WcfServiceLibrary
+
+    public partial class PartsService
+
+        public method CreateSupplier, @Task<PartsServiceResponse>
+            required in aSupplier, @Supplier
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.CreateSupplier(aSupplier,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ReadSupplier, @Task<SupplierReadResponse>
+            required in  aSupplierId, string
+        proc
+            data completionSource = new TaskCompletionSource<SupplierReadResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpSupplier, @Supplier
+                data tmpGrfa, [#]byte
+                data tmpErrorMessage, string
+                data response = new SupplierReadResponse()
+                response.Status = api.ReadSupplier(aSupplierId,tmpSupplier,tmpGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpSupplier
+                response.Grfa = tmpGrfa
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method ReadAllSuppliers, @Task<SupplierReadAllResponse>
+        proc
+            data completionSource = new TaskCompletionSource<SupplierReadAllResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpSuppliers, @List<Supplier>
+                data tmpErrorMessage, string
+                data response = new SupplierReadAllResponse()
+                response.Status = api.ReadAllSuppliers(tmpSuppliers,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpSuppliers
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method UpdateSupplier, @Task<SupplierUpdateResponse>
+            required in aSupplier, @Supplier
+            required in aGrfa, [#]byte
+        proc
+            data completionSource = new TaskCompletionSource<SupplierUpdateResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpSupplier, @Supplier, aSupplier
+                data tmpGrfa, [#]byte, aGrfa
+                data tmpErrorMessage, string
+                data response = new SupplierUpdateResponse()
+                response.Status = api.UpdateSupplier(tmpSupplier,tmpGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                response.Result = tmpSupplier
+                response.Grfa = tmpGrfa
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method DeleteSupplier, @Task<PartsServiceResponse>
+            required in aGrfa, [#]byte
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.DeleteSupplier(aGrfa,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+        public method SupplierExists, @Task<PartsServiceResponse>
+            required in aSupplierId, string
+        proc
+            data completionSource = new TaskCompletionSource<PartsServiceResponse>()
+            lambda curryParams()
+            begin
+                data api = new PartsSystemAPI()
+                data tmpErrorMessage, string
+                data response = new PartsServiceResponse()
+                response.Status = api.SupplierExists(aSupplierId,tmpErrorMessage)
+                response.ErrorMessage = tmpErrorMessage
+                completionSource.SetResult(response)
+            end
+            this.ServiceDispatcher.Dispatch(curryParams)
+            mreturn completionSource.Task
+        endmethod
+
+    endclass
+
+endnamespace
