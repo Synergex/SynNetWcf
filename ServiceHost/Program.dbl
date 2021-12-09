@@ -1,0 +1,51 @@
+
+import System
+import System.Collections.Generic
+import System.Configuration
+import System.ServiceModel
+import WcfServiceLibrary
+
+namespace ServiceHost
+	
+	;;; <summary>
+	;;; The main entry point for the application.
+	;;; </summary>
+	main
+
+	proc
+
+		data settings = new Dictionary<String,String>()
+		data item, @String
+		foreach item in ConfigurationManager.AppSettings
+			settings.Add(item,ConfigurationManager.AppSettings[item])
+		PartsSystem.SynergyEnvironment.SetEnvironment(settings)
+
+		data address, String, "http://localhost:50074"		
+		data svcHost, @ServiceHost, new ServiceHost(^typeof(PartsService), new Uri(address))
+		
+		try
+		begin
+			;;Open the service host to accept incoming calls
+			svcHost.Open()
+			
+			;;The service can now be accessed.
+			Console.WriteLine("The service is ready at " + address)
+			Console.WriteLine("")
+			Console.WriteLine("Press a key to terminate the service")
+			Console.WriteLine("")
+			Console.ReadKey()
+			
+			;;Close the ServiceHostBase to shutdown the service.
+			svcHost.Close() 
+		end
+		catch (ex, @CommunicationException)
+		begin
+			Console.WriteLine("There was a communication problem. " + ex.Message)
+			Console.ReadKey()
+		end
+		endtry
+		
+	endmain
+
+endnamespace
+
