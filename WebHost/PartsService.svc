@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="Synergy" Debug="true" Service="WcfServiceLibrary.PartsService" %>
