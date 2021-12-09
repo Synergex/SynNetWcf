@@ -1,0 +1,249 @@
+
+import System
+import System.Collections.ObjectModel
+import System.ComponentModel
+import System.Configuration
+import System.ServiceModel
+import System.Threading.Tasks
+import System.Windows.Input
+import TestClient.PartsService
+
+import System.Windows
+namespace TestClient
+
+	public class ViewModel implements INotifyPropertyChanged
+
+.region "Constructors"
+
+		public method ViewModel
+		proc
+			endPointName = "SELF_HOSTED"	;Self-hosted service        (configure the solution to start ServiceHost AND TestClient)
+			;endPointName = "IIS_EXPRESS"	;IIS Express hosted service (configure WebHost to use IIS Express and the solution to start TestClient)
+			;endPointName = "IIS"			;IIS hosted service         (configure WebHost to use IIS and the solution to start TestClient)
+
+			AppTitle = String.Format("Parts System Parts Browser [Endpoint: {0} URL: {1}]",endPointName,getClient().Endpoint.Address)
+
+			getSuppliers()
+
+		endmethod
+
+.endregion
+
+.region "Backing storage for properties"
+
+		private mSuppliers,			@ObservableCollection<Supplier>
+		private mSelectedSupplier,	@Supplier
+		private mParts,				@ObservableCollection<Part>
+		private mSelectedPart,		@Part
+
+.endregion
+
+.region "Bindable Properties"
+
+		public property Suppliers, @ObservableCollection<Supplier>
+			method get
+			proc
+				mreturn mSuppliers
+			endmethod
+			method set
+			proc
+				mSuppliers = value
+				NotifyPropertyChanged("Suppliers")
+			endmethod
+		endproperty
+		
+		public property SelectedSupplier, @Supplier
+			method get
+			proc
+				mreturn mSelectedSupplier
+			endmethod
+			method set
+			proc
+				mSelectedSupplier = value
+				NotifyPropertyChanged("SelectedSupplier")
+				getSupplierParts()
+			endmethod
+		endproperty
+		
+		public property Parts, @ObservableCollection<Part>
+			method get
+			proc
+				mreturn mParts
+			endmethod
+			method set
+			proc
+				mParts = value
+				NotifyPropertyChanged("Parts")
+			endmethod
+		endproperty
+		
+		public property SelectedPart, @Part
+			method get
+			proc
+				mreturn mSelectedPart
+			endmethod
+			method set
+			proc
+				mSelectedPart = value
+				NotifyPropertyChanged("SelectedPart")
+				getSelectedPart()
+			endmethod
+		endproperty
+
+		private mAppTitle, String
+		
+		public property AppTitle, String
+			method get
+			proc
+				mreturn mAppTitle
+			endmethod
+			method set
+			proc
+				mAppTitle = value
+				NotifyPropertyChanged("AppTitle")
+			endmethod
+		endproperty
+		
+
+.endregion
+
+.region "Logic"
+
+		private endPointName, string
+
+		private method getClient, @PartsServiceClient
+		proc
+			mreturn new PartsServiceClient(endPointName)
+		endmethod
+
+		private method getSuppliers, void
+			endparams
+		proc
+			ErrorMessage = ""
+			data newSuppliersCollection = new ObservableCollection<Supplier>()
+			data client = getClient()
+			
+			try
+			begin
+				data response = client.ReadAllSuppliers()
+				if (response.Status == MethodStatus.Success) then
+					newSuppliersCollection = response.Result
+				else
+					ErrorMessage = response.ErrorMessage					
+				client.Close()
+			end
+			catch (ex, @Exception)
+			begin
+				client.Abort()
+				ErrorMessage = ex.Message
+			end
+			endtry
+			
+			Suppliers = newSuppliersCollection
+			
+			if (Suppliers.Count > 0)
+				SelectedSupplier = Suppliers[0]
+				
+		endmethod
+
+		private method getSupplierParts, void
+		proc
+			ErrorMessage = ""
+			data newPartsCollection, @ObservableCollection<Part>, new ObservableCollection<Part>()
+			data client = getClient()
+
+			try
+			begin
+				data response = client.ReadSupplierParts(mSelectedSupplier.Supplierid)
+				if (response.Status == MethodStatus.Success) then
+					newPartsCollection = response.Result
+				else
+					ErrorMessage = response.ErrorMessage
+				client.Close()
+			end
+			catch (ex, @Exception)
+			begin
+				client.Abort()
+				ErrorMessage = ex.Message
+			end
+			endtry
+
+			Parts = newPartsCollection
+
+			if (Parts.Count>0)
+				SelectedPart = Parts[0]
+
+		endmethod
+
+		private method getSelectedPart, void
+		proc
+			if (SelectedPart == ^null)
+				mreturn
+
+			;Not really required, just for testing.
+
+;			data newPart, @Part
+;			data client = getClient()
+;			
+;			try
+;			begin
+;				data response = client.ReadPart(mSelectedPart.Id)
+;				if (response.Status == MethodStatus.Success) then
+;				begin
+;					;;Test the update method
+;					data response2 = client.UpdatePart(response.Result,response.Grfa)
+;					if (response2.Status != MethodStatus.Success)
+;						ErrorMessage = response2.ErrorMessage
+;					ErrorMessage = ""
+;				end
+;				else
+;					ErrorMessage = response.ErrorMessage
+;				client.Close()
+;			end
+;			catch (ex, @Exception)
+;			begin
+;				client.Abort()
+;				ErrorMessage = ex.Message
+;			end
+;			endtry
+			
+		endmethod
+
+.endregion
+
+.region "ErrorMessage"
+
+		private mErrorMessage, String
+
+		public property ErrorMessage, String
+			method get
+			proc
+				mreturn mErrorMessage
+			endmethod
+			method set
+			proc
+				mErrorMessage = value
+				NotifyPropertyChanged("ErrorMessage")
+			endmethod
+		endproperty
+		
+.endregion
+
+.region "INotifyPropertyChanged"
+		
+		public event PropertyChanged, @PropertyChangedEventHandler
+		
+		protected method NotifyPropertyChanged, void
+			required in propertyName, String
+			endparams
+		proc
+			if (PropertyChanged!=^null)
+				raiseevent(PropertyChanged,this,new PropertyChangedEventArgs(propertyName))
+		endmethod
+		
+.endregion
+		
+	endclass
+
+endnamespace
+

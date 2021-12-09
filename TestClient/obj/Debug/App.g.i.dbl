@@ -1,0 +1,61 @@
+﻿import System
+import System.Diagnostics
+import System.Windows
+import System.Windows.Automation
+import System.Windows.Controls
+import System.Windows.Controls.Primitives
+import System.Windows.Data
+import System.Windows.Documents
+import System.Windows.Ink
+import System.Windows.Input
+import System.Windows.Markup
+import System.Windows.Media
+import System.Windows.Media.Animation
+import System.Windows.Media.Effects
+import System.Windows.Media.Imaging
+import System.Windows.Media.Media3D
+import System.Windows.Media.TextFormatting
+import System.Windows.Navigation
+import System.Windows.Shapes
+import System.Windows.Shell
+namespace TestClient
+
+	;;; <summary>
+	;;; App
+	;;; </summary>
+	public partial class App inherits System.Windows.Application
+
+		;;; <summary>
+		;;; InitializeComponent
+		;;; </summary>
+		{System.Diagnostics.DebuggerNonUserCodeAttribute()}
+		{System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")}
+		public method InitializeComponent, void
+			endparams
+		proc
+			this.StartupUri = new System.Uri("MainWindow.xaml", System.UriKind.Relative)
+	endmethod
+
+	;;; <summary>
+	;;; Application Entry Point.
+	;;; </summary>
+	{System.STAThreadAttribute()}
+	{System.Diagnostics.DebuggerNonUserCodeAttribute()}
+	{System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")}
+	public static method Main, void
+		endparams
+	proc
+		data app, @TestClient.App, new TestClient.App()
+		app.InitializeComponent()
+		app.Run()
+endmethod
+endclass
+{System.STAThreadAttribute()}
+{System.Diagnostics.DebuggerNonUserCodeAttribute()}
+{System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")}
+main
+proc
+App.Main()
+endmain
+endnamespace
+

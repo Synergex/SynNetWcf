@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="be24af03-0a0a-48e7-b1f3-f4aa0f12b459" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:50075/PartsService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PartsService.xsd" MetadataType="Schema" ID="f6747e79-8fd6-4812-9809-94bd42170b04" SourceId="1" SourceUrl="http://localhost:50075/PartsService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PartsService1.xsd" MetadataType="Schema" ID="9d2a8613-3bcb-49f5-9c6d-3d8195c7e0bc" SourceId="1" SourceUrl="http://localhost:50075/PartsService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PartsService.disco" MetadataType="Disco" ID="9e823a7c-9698-4788-b9b4-7dba3303ea05" SourceId="1" SourceUrl="http://localhost:50075/PartsService.svc?disco" />
+    <MetadataFile FileName="PartsService.wsdl" MetadataType="Wsdl" ID="0e893501-db4a-445d-b8e7-a8d9125477dd" SourceId="1" SourceUrl="http://localhost:50075/PartsService.svc?wsdl" />
+    <MetadataFile FileName="PartsService2.xsd" MetadataType="Schema" ID="04847ba9-d42e-43a9-b290-fd773ff843fc" SourceId="1" SourceUrl="http://localhost:50075/PartsService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PartsService3.xsd" MetadataType="Schema" ID="b91b8f4d-5ee0-4701-b5a8-30c3c1fe01e2" SourceId="1" SourceUrl="http://localhost:50075/PartsService.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="Reference.config" Name="Reference.config" />
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,61 @@
+﻿import System
+import System.Diagnostics
+import System.Windows
+import System.Windows.Automation
+import System.Windows.Controls
+import System.Windows.Controls.Primitives
+import System.Windows.Data
+import System.Windows.Documents
+import System.Windows.Ink
+import System.Windows.Input
+import System.Windows.Markup
+import System.Windows.Media
+import System.Windows.Media.Animation
+import System.Windows.Media.Effects
+import System.Windows.Media.Imaging
+import System.Windows.Media.Media3D
+import System.Windows.Media.TextFormatting
+import System.Windows.Navigation
+import System.Windows.Shapes
+import System.Windows.Shell
+import TestClient
+namespace TestClient
+
+	;;; <summary>
+	;;; MainWindow
+	;;; </summary>
+	public partial class MainWindow inherits System.Windows.Window, System.Windows.Markup.IComponentConnector
+
+		;;; <summary>
+		;;; InitializeComponent
+		;;; </summary>
+		{System.Diagnostics.DebuggerNonUserCodeAttribute()}
+		{System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")}
+		public method InitializeComponent, void
+			endparams
+		proc
+			if (_contentLoaded)
+			mreturn
+			_contentLoaded = true
+			data resourceLocater, @System.Uri, new System.Uri("/TestClient;component/mainwindow.xaml", System.UriKind.Relative)
+			System.Windows.Application.LoadComponent(this, resourceLocater)
+	endmethod
+
+	private _contentLoaded, boolean
+
+	{System.Diagnostics.DebuggerNonUserCodeAttribute()}
+	{System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")}
+	{System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)}
+	{System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1033:InterfaceMethodsShouldBeCallableByChildTypes")}
+	{System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")}
+	{System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")}
+	public method System.Windows.Markup.IComponentConnector.Connect, void
+		connectionId, int 
+		target, @object 
+		endparams
+	proc
+		this._contentLoaded = true
+endmethod
+endclass
+endnamespace
+

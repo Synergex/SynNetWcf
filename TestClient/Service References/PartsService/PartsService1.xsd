@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/WcfServiceLibrary" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/WcfServiceLibrary" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:50075/PartsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PartsSystem" />
+  <xs:complexType name="ReadSupplierPartsResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q1:ArrayOfPart" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ReadSupplierPartsResponse" nillable="true" type="tns:ReadSupplierPartsResponse" />
+  <xs:complexType name="PartsServiceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Status" type="q2:MethodStatus" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PartsServiceResponse" nillable="true" type="tns:PartsServiceResponse" />
+  <xs:complexType name="PartReadResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Grfa" nillable="true" type="xs:base64Binary" />
+          <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q3:Part" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartReadResponse" nillable="true" type="tns:PartReadResponse" />
+  <xs:complexType name="PartReadAllResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q4:ArrayOfPart" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartReadAllResponse" nillable="true" type="tns:PartReadAllResponse" />
+  <xs:complexType name="PartUpdateResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Grfa" nillable="true" type="xs:base64Binary" />
+          <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q5:Part" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PartUpdateResponse" nillable="true" type="tns:PartUpdateResponse" />
+  <xs:complexType name="ProductGroupReadResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Grfa" nillable="true" type="xs:base64Binary" />
+          <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q6:ProductGroup" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductGroupReadResponse" nillable="true" type="tns:ProductGroupReadResponse" />
+  <xs:complexType name="ProductGroupReadAllResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q7:ArrayOfProductGroup" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductGroupReadAllResponse" nillable="true" type="tns:ProductGroupReadAllResponse" />
+  <xs:complexType name="ProductGroupUpdateResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Grfa" nillable="true" type="xs:base64Binary" />
+          <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q8:ProductGroup" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ProductGroupUpdateResponse" nillable="true" type="tns:ProductGroupUpdateResponse" />
+  <xs:complexType name="SupplierReadResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Grfa" nillable="true" type="xs:base64Binary" />
+          <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q9:Supplier" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SupplierReadResponse" nillable="true" type="tns:SupplierReadResponse" />
+  <xs:complexType name="SupplierReadAllResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q10:ArrayOfSupplier" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SupplierReadAllResponse" nillable="true" type="tns:SupplierReadAllResponse" />
+  <xs:complexType name="SupplierUpdateResponse">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:PartsServiceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Grfa" nillable="true" type="xs:base64Binary" />
+          <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PartsSystem" minOccurs="0" name="Result" nillable="true" type="q11:Supplier" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SupplierUpdateResponse" nillable="true" type="tns:SupplierUpdateResponse" />
+</xs:schema>

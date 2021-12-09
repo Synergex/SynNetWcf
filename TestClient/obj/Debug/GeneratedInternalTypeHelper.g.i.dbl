@@ -1,0 +1,74 @@
+﻿
+.array 0
+namespace XamlGeneratedNamespace
+
+	;;; <summary>
+	;;; GeneratedInternalTypeHelper
+	;;; </summary>
+	{System.Diagnostics.DebuggerNonUserCodeAttribute()}
+	{System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "4.0.0.0")}
+	{System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)}
+	public sealed class GeneratedInternalTypeHelper inherits System.Windows.Markup.InternalTypeHelper
+
+		;;; <summary>
+		;;; CreateInstance
+		;;; </summary>
+		protected override method CreateInstance, @object
+			type, @System.Type 
+			culture, @System.Globalization.CultureInfo 
+			endparams
+		proc
+			mreturn System.Activator.CreateInstance(type, (System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic) | (System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.CreateInstance), ^null, ^null, culture)
+	endmethod
+
+	;;; <summary>
+	;;; GetPropertyValue
+	;;; </summary>
+	protected override method GetPropertyValue, @object
+		propertyInfo, @System.Reflection.PropertyInfo 
+		target, @object 
+		culture, @System.Globalization.CultureInfo 
+		endparams
+	proc
+		mreturn propertyInfo.GetValue(target, System.Reflection.BindingFlags.Default, ^null, ^null, culture)
+endmethod
+
+;;; <summary>
+;;; SetPropertyValue
+;;; </summary>
+protected override method SetPropertyValue, void
+	propertyInfo, @System.Reflection.PropertyInfo 
+	target, @object 
+	value, @object 
+	culture, @System.Globalization.CultureInfo 
+	endparams
+proc
+	propertyInfo.SetValue(target, value, System.Reflection.BindingFlags.Default, ^null, ^null, culture)
+endmethod
+
+;;; <summary>
+;;; CreateDelegate
+;;; </summary>
+protected override method CreateDelegate, @System.Delegate
+delegateType, @System.Type 
+target, @object 
+handler, string 
+endparams
+proc
+mreturn (@System.Delegate)target.GetType().InvokeMember("_CreateDelegate", System.Reflection.BindingFlags.InvokeMethod | (System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance), ^null, target, new System.Object[#] {delegateType, handler}, ^null)
+endmethod
+
+;;; <summary>
+;;; AddEventHandler
+;;; </summary>
+protected override method AddEventHandler, void
+eventInfo, @System.Reflection.EventInfo 
+target, @object 
+handler, @System.Delegate 
+endparams
+proc
+eventInfo.AddEventHandler(target, handler)
+endmethod
+endclass
+endnamespace
+
